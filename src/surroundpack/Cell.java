@@ -18,7 +18,7 @@ public class Cell {
      *  for example: add on a int property color that indicates
      *  			1 means this would be a ok choose.
      *  			3 means this would be a poor choose.
-     *
+     *  TEST
      */
 
     public Cell(int playeNumber) {
