@@ -21,6 +21,8 @@ public class Cell {
      *  TEST
      */
 
+
+    // FIX ME: playeNumber
     public Cell(int playeNumber) {
         super();
         this.playeNumber = playeNumber;

@@ -1,5 +1,7 @@
 package surroundpack;
 
+// FIX ME: fix all the playeNumber references to playerNumber
+
 public class Surround4Game {
     private Cell[][] board;
     private int player;

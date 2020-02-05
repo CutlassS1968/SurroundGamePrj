@@ -49,7 +49,7 @@ public class Surround4Panel extends JPanel {
             for (int row = 0; row < board.length; row++)
                 for (int col = 0; col < board[0].length; col++)
                     if (board[row][col] == e.getSource())
-                        if (game.select(row, col)) {
+                        if (game.select(row, col)) {    // If spot in the array is not occupied)
                             //		board[row][col].setText(""+game.getCurrentPlayer());
                             player = game.nextPlayer();
                         } else

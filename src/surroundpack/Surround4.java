@@ -16,6 +16,7 @@ public class Surround4 {
         JMenuItem quitItem;
         JMenuItem newGameItem;
 
+        // Why is this outside the Surround4Panel Constructor?
         JFrame frame = new JFrame ("Surround game");
         frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
 
