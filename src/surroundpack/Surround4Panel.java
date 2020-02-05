@@ -10,6 +10,9 @@ public class Surround4Panel extends JPanel {
 
     private JButton[][] board;
 
+    private int bSize;
+    private int nPlayers;
+    private int sPlayer;
     private JPanel panel1;
     private int player;
     private ButtonListener listen;
@@ -26,7 +29,11 @@ public class Surround4Panel extends JPanel {
         panel1 = new JPanel();
 
         String strBdSize = JOptionPane.showInputDialog(null,"Enter in the size of the board: ");
-        int bSize = Integer.parseInt(strBdSize);
+        bSize = Integer.parseInt(strBdSize);
+        String strNumPlayers = JOptionPane.showInputDialog(null, "Enter the number of players: ");
+        nPlayers = Integer.parseInt(strNumPlayers);
+        String strStartPlayer = JOptionPane.showInputDialog(null, "Who starts first? (default 0)");
+        sPlayer = Integer.parseInt(strStartPlayer);
 
         createBoard();
         add(panel1, BorderLayout.CENTER);
@@ -77,27 +84,52 @@ public class Surround4Panel extends JPanel {
 
     private void createBoard() {
 
-        board = new JButton[10][10];
-        panel1.setLayout(new GridLayout(10, 10));
+        if (bSize > 3 && bSize < 21) {
+            board = new JButton[bSize][bSize];
+            panel1.setLayout(new GridLayout(bSize, bSize));
 
-        for (int i = 0; i < 10; i++) // rows
-            for (int j = 0; j < 10; j++) {
-                board[i][j] = new JButton("");
-                board[i][j].addActionListener(listen);
-                panel1.add(board[i][j]);
-            }
+            for (int i = 0; i < bSize; i++) // rows
+                for (int j = 0; j < bSize; j++) {
+                    board[i][j] = new JButton("");
+                    board[i][j].addActionListener(listen);
+                    panel1.add(board[i][j]);
+                }
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Invalid board size");
+            board = new JButton[10][10];
+            panel1.setLayout(new GridLayout(10, 10));
+
+            for (int i = 0; i < 10; i++) // rows
+                for (int j = 0; j < 10; j++) {
+                    board[i][j] = new JButton("");
+                    board[i][j].addActionListener(listen);
+                    panel1.add(board[i][j]);
+                }
+        }
     }
 
     private void displayBoard() {
-
-        for (int row = 0; row < 10; row++)
-            for (int col = 0; col < 10; col++) {
-                Cell c = game.getCell(row, col);
-                if (c != null)
-                    board[row][col].setText("" + c.getPlayeNumber());
-                else
-                    board[row][col].setText("");
-            }
+        if (bSize > 3 && bSize < 21) {
+            for (int row = 0; row < bSize; row++)
+                for (int col = 0; col < bSize; col++) {
+                    Cell c = game.getCell(row, col);
+                    if (c != null)
+                        board[row][col].setText("" + c.getPlayeNumber());
+                    else
+                        board[row][col].setText("");
+                }
+        }
+        else {
+            for (int row = 0; row < 10; row++)
+                for (int col = 0; col < 10; col++) {
+                    Cell c = game.getCell(row, col);
+                    if (c != null)
+                        board[row][col].setText("" + c.getPlayeNumber());
+                    else
+                        board[row][col].setText("");
+                }
+        }
     }
 
 
