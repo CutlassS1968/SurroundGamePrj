@@ -70,14 +70,14 @@ public class Surround4Panel extends JPanel {
                         } else
                             JOptionPane.showMessageDialog(null, "Not a valid square! Pick again.");
 
-//            for (int row = 0; row < 10; row++)
-//                for (int col = 0; col < 10; col++) {
-//                    Cell c = game.getCell(row, col);
-//                    if (c != null)
-//                        board[row][col].setText("" + c.getPlayerNumber());
-//                    else
-//                        board[row][col].setText("");
-//                }
+            for (int row = 0; row < 10; row++)
+                for (int col = 0; col < 10; col++) {
+                    Cell c = game.getCell(row, col);
+                    if (c != null)
+                        board[row][col].setText("" + c.getPlayerNumber());
+                    else
+                        board[row][col].setText("");
+                }
 
             displayBoard();
             int winner = game.getWinner();
@@ -139,7 +139,6 @@ public class Surround4Panel extends JPanel {
                 }
         }
     }
-
 
 }
 

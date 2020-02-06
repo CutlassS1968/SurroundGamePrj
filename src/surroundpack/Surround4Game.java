@@ -5,6 +5,7 @@ import javax.swing.*;
 public class Surround4Game{
     private Cell[][] board;
     private int player;
+    private int bSize;
 
     public Surround4Game() {
 //        super();
@@ -14,6 +15,7 @@ public class Surround4Game{
     public Surround4Game(int size, int players, int player) {
         board = new Cell[size][size];
         this.player = player;
+        bSize = size;
     }
 
     public void reset() {
@@ -52,8 +54,8 @@ public class Surround4Game{
     }
 
     public int getWinner() {
-        for (int row = 0; row < 10; row++)
-            for (int col = 0; col < 10; col++)
+        for (int row = 0; row < bSize; row++)
+            for (int col = 0; col < bSize; col++)
                 if (board[row][col] != null) {
 
                     // top-left corner case (check two sides only)
@@ -63,53 +65,53 @@ public class Surround4Game{
                                 return board[0][1].getPlayerNumber();
 
                     // top-right corner case (check two sides only)
-                    if (row == 0 && col == 9)
-                        if (board[0][8] != null && board[1][9] != null)
-                            if (board[0][8].getPlayerNumber() == board[1][9].getPlayerNumber())
-                                return board[0][8].getPlayerNumber();
+                    if (row == 0 && col == bSize-1)
+                        if (board[0][bSize-2] != null && board[1][bSize-1] != null)
+                            if (board[0][bSize-2].getPlayerNumber() == board[1][bSize-1].getPlayerNumber())
+                                return board[0][bSize-2].getPlayerNumber();
 
                     // bottom-left corner case (check two sides only)
-                    if (row == 9 && col == 0)
-                        if (board[8][0] != null && board[9][1] != null)
-                            if (board[8][0].getPlayerNumber() == board[9][1].getPlayerNumber())
-                                return board[8][0].getPlayerNumber();
+                    if (row == bSize-1 && col == 0)
+                        if (board[bSize-2][0] != null && board[bSize-1][1] != null)
+                            if (board[bSize-2][0].getPlayerNumber() == board[bSize-1][1].getPlayerNumber())
+                                return board[bSize-2][0].getPlayerNumber();
 
                     // bottom-right corner case (check two sides only)
-                    if (row == 9 && col == 9)
-                        if (board[8][9] != null && board[9][8] != null)
-                            if (board[8][9].getPlayerNumber() == board[8][9].getPlayerNumber())
-                                return board[8][9].getPlayerNumber();
+                    if (row == bSize-1 && col == bSize-1)
+                        if (board[bSize-2][bSize-1] != null && board[bSize-1][bSize-2] != null)
+                            if (board[bSize-2][bSize-1].getPlayerNumber() == board[bSize-2][bSize-1].getPlayerNumber())
+                                return board[bSize-2][bSize-1].getPlayerNumber();
 
                     // left-border case (excluding corners - check 3 sides only)
-                    if (row != 0 && row != 9 && col == 0)
+                    if (row != 0 && row != bSize-1 && col == 0)
                         if (board[row - 1][col] != null && board[row][col + 1] != null && board[row + 1][col] != null)
                             if (board[row - 1][col].getPlayerNumber() == board[row][col + 1].getPlayerNumber() &&
                                     board[row - 1][col].getPlayerNumber() == board[row + 1][col].getPlayerNumber())
                                 return board[row - 1][col].getPlayerNumber();
 
                     // top-border case (excluding corners - check 3 sides only)
-                    if (row == 0 && col != 0 && col != 9)
+                    if (row == 0 && col != 0 && col != bSize-1)
                         if (board[row][col - 1] != null && board[row + 1][col] != null && board[row][col + 1] != null)
                             if (board[row][col - 1].getPlayerNumber() == board[row + 1][col].getPlayerNumber() &&
                                     board[row][col - 1].getPlayerNumber() == board[row][col + 1].getPlayerNumber())
                                 return board[row][col - 1].getPlayerNumber();
 
                     // right-border case (excluding corners - check 3 sides only)
-                    if (row != 0 && row != 9 && col == 9)
+                    if (row != 0 && row != bSize-1 && col == bSize-1)
                         if (board[row - 1][col] != null && board[row][col - 1] != null && board[row + 1][col] != null)
                             if (board[row - 1][col].getPlayerNumber() == board[row][col - 1].getPlayerNumber() &&
                                     board[row - 1][col].getPlayerNumber() == board[row + 1][col].getPlayerNumber())
                                 return board[row - 1][col].getPlayerNumber();
 
                     // bottom-border case (excluding corners - check 3 sides only)
-                    if (row == 9 && col != 0 && col != 9)
+                    if (row == bSize-1 && col != 0 && col != bSize-1)
                         if (board[row][col - 1] != null && board[row - 1][col] != null && board[row][col + 1] != null)
                             if (board[row][col - 1].getPlayerNumber() == board[row - 1][col].getPlayerNumber() &&
                                     board[row][col - 1].getPlayerNumber() == board[row][col + 1].getPlayerNumber())
                                 return board[row][col - 1].getPlayerNumber();
 
                     // center case (excluding sides and corners - check 4 sides)
-                    if (row != 0 && row != 9 && col != 0 && col != 9)
+                    if (row != 0 && row != bSize-1 && col != 0 && col != bSize-1)
                         if (board[row-1][col] != null && board[row][col-1] != null && board[row+1][col] != null &&
                         board[row][col+1] != null)
                             if (board[row-1][col].getPlayerNumber() == board[row][col-1].getPlayerNumber() &&
