@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class Cell {
 
-    private int playeNumber;
+    private int playerNumber;
     /*
      *  First, the Surround4 game class will only use the player
      *   number to determine a winner.
@@ -18,17 +18,16 @@ public class Cell {
      *  for example: add on a int property color that indicates
      *  			1 means this would be a ok choose.
      *  			3 means this would be a poor choose.
-     *  TEST
+     *
      */
 
 
-    // FIX ME: playeNumber
-    public Cell(int playeNumber) {
+    public Cell(int playerNumber) {
         super();
-        this.playeNumber = playeNumber;
+        this.playerNumber = playerNumber;
     }
 
-    public int getPlayeNumber() {
-        return playeNumber;
+    public int getPlayerNumber() {
+        return playerNumber;
     }
 }

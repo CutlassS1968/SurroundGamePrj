@@ -29,7 +29,15 @@ public class Surround4Panel extends JPanel {
         panel1 = new JPanel();
 
         String strBdSize = JOptionPane.showInputDialog(null,"Enter in the size of the board: ");
-        bSize = Integer.parseInt(strBdSize);
+        try {
+            bSize = Integer.parseInt(strBdSize);
+            if (bSize < 3 || bSize > 19)
+                throw new IllegalArgumentException();
+        } catch (Exception e) {
+            bSize = 10;
+            JOptionPane.showMessageDialog(null, "Wrong, dipshit");
+        }
+
         String strNumPlayers = JOptionPane.showInputDialog(null, "Enter the number of players: ");
         nPlayers = Integer.parseInt(strNumPlayers);
         String strStartPlayer = JOptionPane.showInputDialog(null, "Who starts first? (default 0)");
@@ -37,7 +45,7 @@ public class Surround4Panel extends JPanel {
 
         createBoard();
         add(panel1, BorderLayout.CENTER);
-        game = new Surround4Game();
+        game = new Surround4Game(bSize, nPlayers, sPlayer);
         quitItem.addActionListener(listen);
         newGameItem.addActionListener(listen);
 
@@ -57,19 +65,19 @@ public class Surround4Panel extends JPanel {
                 for (int col = 0; col < board[0].length; col++)
                     if (board[row][col] == e.getSource())
                         if (game.select(row, col)) {    // If spot in the array is not occupied)
-                            //		board[row][col].setText(""+game.getCurrentPlayer());
+                            		board[row][col].setText(""+game.getCurrentPlayer());
                             player = game.nextPlayer();
                         } else
                             JOptionPane.showMessageDialog(null, "Not a valid square! Pick again.");
 
-            for (int row = 0; row < 10; row++)
-                for (int col = 0; col < 10; col++) {
-                    Cell c = game.getCell(row, col);
-                    if (c != null)
-                        board[row][col].setText(""+c.getPlayeNumber());
-                    else
-                        board[row][col].setText("");
-                }
+//            for (int row = 0; row < 10; row++)
+//                for (int col = 0; col < 10; col++) {
+//                    Cell c = game.getCell(row, col);
+//                    if (c != null)
+//                        board[row][col].setText("" + c.getPlayerNumber());
+//                    else
+//                        board[row][col].setText("");
+//                }
 
             displayBoard();
             int winner = game.getWinner();
@@ -115,7 +123,7 @@ public class Surround4Panel extends JPanel {
                 for (int col = 0; col < bSize; col++) {
                     Cell c = game.getCell(row, col);
                     if (c != null)
-                        board[row][col].setText("" + c.getPlayeNumber());
+                        board[row][col].setText("" + c.getPlayerNumber());
                     else
                         board[row][col].setText("");
                 }
@@ -125,7 +133,7 @@ public class Surround4Panel extends JPanel {
                 for (int col = 0; col < 10; col++) {
                     Cell c = game.getCell(row, col);
                     if (c != null)
-                        board[row][col].setText("" + c.getPlayeNumber());
+                        board[row][col].setText("" + c.getPlayerNumber());
                     else
                         board[row][col].setText("");
                 }
