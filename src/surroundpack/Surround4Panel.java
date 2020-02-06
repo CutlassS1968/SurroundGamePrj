@@ -28,16 +28,11 @@ public class Surround4Panel extends JPanel {
         setLayout(new BorderLayout());
         panel1 = new JPanel();
 
-        String strBdSize = JOptionPane.showInputDialog(null,"Enter in the size of the board: ");
-        bSize = Integer.parseInt(strBdSize);
-        String strNumPlayers = JOptionPane.showInputDialog(null, "Enter the number of players: ");
-        nPlayers = Integer.parseInt(strNumPlayers);
-        String strStartPlayer = JOptionPane.showInputDialog(null, "Who starts first? (default 0)");
-        sPlayer = Integer.parseInt(strStartPlayer);
+        checkValidNumbers();
 
         createBoard();
         add(panel1, BorderLayout.CENTER);
-        game = new Surround4Game(bSize);
+        game = new Surround4Game(bSize, nPlayers, sPlayer);
         quitItem.addActionListener(listen);
         newGameItem.addActionListener(listen);
 
@@ -48,28 +43,16 @@ public class Surround4Panel extends JPanel {
             if (e.getSource() == quitItem)
                 System.exit(1);
             if (e.getSource() == newGameItem){
-                int i = bSize;
-                String strBdSize = JOptionPane.showInputDialog(null,"Enter in the size of the board: ");
-                bSize = Integer.parseInt(strBdSize);
-                String strNumPlayers = JOptionPane.showInputDialog(null, "Enter the number of players: ");
-                nPlayers = Integer.parseInt(strNumPlayers);
-                String strStartPlayer = JOptionPane.showInputDialog(null, "Who starts first? (default 0)");
-                sPlayer = Integer.parseInt(strStartPlayer);
-                for (int row = 0; row < board.length; row++)
-                for (; i > bSize; i--) {
-                    panel1.remove(i);
-                }
-                add(panel1, BorderLayout.CENTER);
-                game = new Surround4Game(bSize);
+                checkValidNumbers();
                 panel1.revalidate();
                 panel1.repaint();
             }
 
             for (int row = 0; row < board.length; row++)
-                for (int col = 0; col < board.length; col++)
+                for (int col = 0; col < board[0].length; col++)
                     if (board[row][col] == e.getSource())
-                        if (game.select(row, col)) {
-                            //		board[row][col].setText(""+game.getCurrentPlayer());
+                        if (game.select(row, col)) { // If spot int the array is not occupied
+                                board[row][col].setText(""+game.getCurrentPlayer());
                             player = game.nextPlayer();
                         } else
                             JOptionPane.showMessageDialog(null, "Not a valid square! Pick again.");
@@ -141,6 +124,42 @@ public class Surround4Panel extends JPanel {
                     else
                         board[row][col].setText("");
                 }
+        }
+    }
+
+    private void checkValidNumbers () {
+
+        // Board Size
+        String strBdSize = JOptionPane.showInputDialog(null,"Enter in the size of the board: ");
+        try {
+            bSize = Integer.parseInt(strBdSize);
+            if (bSize < 3 || bSize > 19)
+                throw new IllegalArgumentException();
+        }catch (Exception e) {
+            bSize = 10;
+            JOptionPane.showMessageDialog(null, "Invalid entry");
+        }
+
+        // Number of Players
+        String strNumPlayers = JOptionPane.showInputDialog(null, "Enter the number of players: ");
+        try {
+            nPlayers = Integer.parseInt(strNumPlayers);
+            if (nPlayers < 2 || nPlayers > 5)
+                throw new IllegalArgumentException();
+        }catch (Exception e) {
+            nPlayers = 2;
+            JOptionPane.showMessageDialog(null, "Invalid entry");
+        }
+
+        // Starting Player
+        String strStartPlayer = JOptionPane.showInputDialog(null, "Who starts first? (default 0)");
+        try {
+            sPlayer = Integer.parseInt(strStartPlayer);
+            if (sPlayer > nPlayers-1 || sPlayer < 0)
+                throw new IllegalArgumentException();
+        }catch (Exception e) {
+            sPlayer = 0;
+            JOptionPane.showMessageDialog(null, "Invalid entry");
         }
     }
 

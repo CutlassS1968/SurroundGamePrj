@@ -13,9 +13,9 @@ public class Surround4Game {
         this.player = 1;
     }
 
-    public Surround4Game(int size) {
+    public Surround4Game(int size, int players, int player) {
         board = new Cell[size][size];
-        this.player = 1;
+        this.player = player;
         bSize = size;
     }
 
