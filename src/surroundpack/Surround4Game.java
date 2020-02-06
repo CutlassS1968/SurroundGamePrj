@@ -2,16 +2,17 @@ package surroundpack;
 
 import javax.swing.*;
 
-public class Surround4Game{
+public class Surround4Game {
     private Cell[][] board;
     private int player;
     private int bSize;
 
     public Surround4Game() {
-//        super();
+        super();
         board = new Cell[10][10];
         this.player = 1;
     }
+
     public Surround4Game(int size, int players, int player) {
         board = new Cell[size][size];
         this.player = player;
@@ -44,8 +45,7 @@ public class Surround4Game{
     }
 
     public boolean select(int row, int col) {
-        if (board[row][col] == null) {  //|| (cats() && board[row][col].getPlayerNumber() !=
-            // player)) {
+        if (board[row][col] == null) {  //|| (cats() && board[row][col].getPlayerNumber() != player)) {
             Cell c = new Cell(player);
             board[row][col] = c;
             return true;
@@ -67,8 +67,8 @@ public class Surround4Game{
                     // top-right corner case (check two sides only)
                     if (row == 0 && col == bSize-1)
                         if (board[0][bSize-2] != null && board[1][bSize-1] != null)
-                            if (board[0][bSize-2].getPlayerNumber() == board[1][bSize-1].getPlayerNumber())
-                                return board[0][bSize-2].getPlayerNumber();
+                            if (board[0][bSize-1].getPlayerNumber() == board[1][bSize-2].getPlayerNumber())
+                                return board[0][bSize-1].getPlayerNumber();
 
                     // bottom-left corner case (check two sides only)
                     if (row == bSize-1 && col == 0)
@@ -121,6 +121,7 @@ public class Surround4Game{
                 }
         return -1;
     }
+
 }
 
 
