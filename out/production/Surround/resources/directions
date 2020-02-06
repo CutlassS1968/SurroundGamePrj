@@ -1,0 +1,242 @@
+CIS 163 Project 2
+A Surround program
+
+Due Date
+    •	At the beginning of the lab; see the last page of the syllabus (i.e., schedule)
+
+Before Starting the Project
+    •	Review Chapters 6,7 of the CIS163 book
+    •	Read this entire project description before starting
+
+Why are you doing this project.
+    •	This project will let you work with a partner (perhaps a person you just met) on your first
+        CIS163 that is not a review of CIS162.
+
+Assignment Objects:
+    •	To create a project that uses Model View Controller design (MVC)
+    •	To use a 2-Dimensional array of GUI components
+    •	To use nested loops to solve complex problems that involve 2-Dim arrays
+    •	To pass and/or return an array of objects
+
+Problem Statement:
+Write a Java program that plays the Surround game and a bit more.  This basic game of Surround game
+will be demonstrated in class and been modified to make it a bit easier to code. For this game, a
+player wins by surrounding another players square.  Once a player surrounds any other player, the
+surround player wins the game.  The definition of a surround is: the north, south, east, and west
+squares to be occupied to win, however, the side of the board only require 3 squares to be occupied
+and the corners only require 2 squares.
+
+Sample screen shots of wins and these figure doesn’t include all the requirements found in this
+document.
+
+In all three cases, player 1 won (in the last figure, a player can not win surrounding themself).
+Finally, this is a multi-player game.  There are between 2 and 99 players allowed.
+
+Important: Starting code has been provided and has (in part) completed some of the initial steps.
+
+Step 1: Create an Eclipse project named Surround”
+    •	Create a package named: surroundpack	(right click on “Projects” and select package)
+    •	Create a class named: Surround4		(right click on “surrondpack” and select class)
+    •	Create a class named: Surround4Panel	(right click on “surrondpack” and select class)
+    •	Create a class named: Surround4Game	(right click on “surrondpack” and select class)
+
+
+Step 2: Implement the class named: Surround4:
+Using the main program found in chapter 6 of your book as a guide, and create a main method that
+creates a JPanel object (Surround4Panel).  Create two JmenuItems: “quitItem” and “newGameItem” and
+if needed pass these two JMenuItem objects to the Surround4Panel.   The “quitItem” JMenuItem quits
+the game, and the “newGameItem” starts a completely new game (as if you just started the game).
+
+
+Step 3: Implement the class named: Surround4Panel:  Step 4 does the simple version of “surround”
+with only a 10 X 10 board. Step 7 allows the user to enter in a different size board and different
+number of players.
+
+    •	Create the following properties for the Surround4Panel JPanel (more if you wish):
+            private JButton[][] board;
+            private Surround4Game game;
+            private JMenuItem newGameItem;
+            private JMenuItem quitItem;
+
+The JButton[][] variable “board” is a 2-dim array that represents the GUI board that the user sees.
+The this.newGameItem and this.quitItem are used to save off the two parameters, newGameItem and
+quitItem for later use in the actionPerform method.
+
+    •	In the constructor for Surround4Panel(JMenuItem quitItem, JMenuItem newGameItem) do the
+        following:
+        o	Create JPanels as needed so that you have a nice looking GUI display
+        o	Create JPanels as needed (e.g., panel), use a GridLayout that is 10 X 10 that represents
+            the board.
+        o	Create listeners for every JButton. (It might be a single listener object).
+            - You will need to use a nested loop, for example:
+                for (int row = 0; row < 10; row++)
+                    for (int col = 0; col < 10; col++) {
+                        board[row][col] = new JButton(" ");
+                        board[row][col].addActionListener(listener);
+                        panel.add(board[row][col]);
+                        }
+        o	Set the title of the JFrame title to “Surround”
+        o	Create a Surround4Game Game object:
+            game = new Surround4Game();
+
+    •	Create a private inner class named “ButtonListener” that implements an ActionListener.
+        Create an actionPerformed method that calls the different methods in the Surround4Game class
+        using the game object.  For example, call the game.select() method when a user clicks a
+        JButton on the board. The following is some of the code within the actionPerformed method
+        that may be useful you:
+
+// Determine which button was selected.
+for (int row = 0; row < 10; row++)
+	for (int col = 0; col < 10; col++)
+	    if (board [row][col] == e.getSource())
+			if (game.select(row, col))
+					player = game.nextPlayer();
+					else
+				JOptionPane.showMessageDialog(null, "Pick again.");
+
+
+		// Display information on the board using a simple setText method (an Icon also could be used)
+for (int row = 0; row < 10; row++)
+		for (int col = 0; col < 10; col++) {
+			Cell c = game.getCell (row,col);
+			if (c != null)
+				board[row][col].setText(""+c.getPlayerNumber());
+			else
+				board[row][col].setText("");
+			}
+
+		// Determine if there is a winner by asking the game object. (see step 6)
+int winner = game.isWinner();
+if (winner != -1) {
+	JOptionPane.showMessageDialog(null,"Player "+winner+" Wins!");
+
+
+Step 4 :  Create a very simple Cell class.  In later steps, this class will be changed.
+public class Cell {
+
+	private int playerNumber;
+
+	public Cell(int playerNumber) {
+		this.playerNumber = playerNumber;
+	}
+
+	public int getPlayerNumber() {
+		return playerNumber;
+	}
+
+Step 5: Implement the class named: Surround4Game: Step 5 is the model and does the simple version of
+Surround game with only a 10 x 10 board. Step 6 allows the user to enter in a different size board
+and number of players.
+
+This class handles ALL of the game activities, and the following methods and properties must be
+created
+    •	Create the following properties for the Surround4Game class (create more properties if needed):
+private Cell[][] board;
+
+    •	public Surround4Game()  A constructor method that initializes the board.
+        o	For example:
+
+            board = new int[10][10];
+
+    •	public Boolean select (int row, int col) this method is called from the Surround4Panel class
+        and is invoked when the user has selected a JButton.  This method determines if the row, col
+        that was selected was an empty square.  Return true if valid, otherwise return false.
+
+    •	public reset() this method is called from the Surround4Panel class and it resets the board
+        to a new game.
+
+
+    •	public int isWinner() this method is called from the Surround4Panel class and it determines
+        if a player has won the game after the select method (see above) was called.
+        o	Return -1 if there is no winner.
+        o	Return playerNumber if there is a winner.
+
+
+    •	To determine a winner requires lots and lots of if statements.  Here is an example: Assuming
+        board[row][col] != null then…
+
+// top-left corner case (check 2 sides only)
+	if (row == 0 && col == 0)
+		if (board[0][1] != null && board[1][0] != null)
+			if (board[0][1].getPlayeNumber() == board[1][0].getPlayeNumber())
+				return board[0][1];
+
+// left-border case (excluding corners - check 3 sides only)
+	if (row != 0 && row != boardSize-1 && col == 0)
+	    if (board[row-1][col] != null && board[row][col+1] != null && board[row+1][col] != null)
+		if (board[row-1][col].getPlayeNumber() == board[row][col+1].getPlayeNumber() &&
+			board[row-1][col].getPlayeNumber() == board[row+1][col].getPlayeNumber())
+				return board[row-1][col];    // just pick one of them
+
+
+Step 6: Add the following functionality to the game
+    •	Ask the user to enter the size of the board to be used (default 10) and the number of
+        players. (default 2).  To accomplish this, you can use JOptionPane.showInputDialog method.
+        For example, to ask the user to enter in ‘board size’ the following could be used:
+
+String strBdSize = JOptionPane.showInputDialog (null, "Enter in the size of the board: “);
+int bSize = Integer.parseInt(strBdSize);
+
+-------------------------------------------------------------------------------------------------
+
+the board must be greater than 3 and less than 20.  (Recommendation: ask the user within the
+Surround4Panel class constructor).  If the user enters invalid input (e.g., “abc”, -10) then warn
+the user with a message Dialog box and use a default values.
+    •	Ask the user who starts the game first?  If there are 5 players, then any player may start
+        first.  To accomplish this, you can use JOptionPane.showInputDialog (null, "Who starts
+        first? (default 0)“). Finally, if the user enters invalid input (e.g., “Pizza”, -1 then
+        warn the user with a message Dialog box and use a default values.
+
+Step 7: Add on to the newGameItem the following feature:
+    •	If the user selects “New Game” from the JMenuItem, have the game re-ask these questions in
+        step 7.  This will require you to reset GUI using revalidate and repaint.  Look online
+        (google) and ask the question: adding and removing JButtons from a JPanel.
+
+Step 8: Think outside of the box.  Listed below are some ideas you can try.  You must implement four
+ideas (1 - 6) of your choosing, OR  gold Star and two ideas  OR double Gold Star using recursion and
+one idea. Note: the above are only allowed combinations. Please talk with your instructor for more
+details if needed.
+
+	  The Surround game class uses the player number to determine a winner. However, you could add
+	  new properties to make the game more interesting.
+    •	Idea 1: add on a Color property that changes with different risk levels.
+        o	use red if the cell is about to surrounded, i.e., at high risk
+        o	use green if the cell is at low risk.
+
+    •	Idea 2: add on Color property color that indicates if this would be a good cell to pick.
+        o	Create a simple scale from 1 to 3.
+    -	Red means this would be a very good choose, you could win!
+    -	Green means this would be a ok choose.
+    -	Blue means this would be a poor choose, pointless, wasted turn
+
+    •	Idea 3: create a count down timer for each cell, that gives a user only limited time to pick
+        take cell.
+
+    •	Idea 4:  Wrap the board, top and sides! Have the top of the bottom connect to the bottom,
+        and the left side connects to the right side.
+
+    •	Idea 5: Add on to the main GUI display new JLabels that represent the number of times player
+        wins. (Initialize to zero when the games start).
+
+    •	Idea 6: Add on a simple undo operation using a JButton, that goes back one move.  Make sure
+        this JButton is enabled or dis-abled appropriately.
+
+    •	GOLD STAR, add on AI to your project…. (you can assume 2 person game, and the computer would
+        be player 0)
+        o	Attempt to win the game by attempting to place your “O” somewhere on the board that
+            causes you to win.  For example: attempt to place an “O” in every position to see if
+            your AI can win.
+
+        o	Attempt to block the user (“1”) from winning by placing an “O” in every position to see
+            if your AI can block the “1” from winning.
+
+        o	If there is not a winning position (i.e., step 1) or a blocking position (i.e., step 2),
+            then attempt to come up with a strategy to place your “O” in such a way to have winning
+            future. Make this step mean more than just randomly placing a O somewhere on the board.
+            Do just a bit more.
+
+    •	DOUBLE GOLD STAR, add on a special win… see example (also see instructor) .  A general
+        surround winner.  In the example below: player 1 won.  There is lots of different versions
+        of this special win condition. You must see the instructor to determine the exact win
+        condition.
+
