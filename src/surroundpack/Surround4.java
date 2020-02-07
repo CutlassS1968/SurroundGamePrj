@@ -2,8 +2,18 @@ package surroundpack;
 
 import javax.swing.*;
 
+/**********************************************************************************************
+ * This program creates a game called Surround, the objective of the game is to surround an
+ * opponent with tiles
+ *
+ * @author      Austin Ackerman
+ * @author      Evan Johns
+ * @version     02/11/2020
+ **********************************************************************************************/
+
 public class Surround4 {
     /**
+     * Main starts the main loop of the game
      * @param args
      */
     public static void main (String[] args)
