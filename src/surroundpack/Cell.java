@@ -1,32 +1,34 @@
 package surroundpack;
 
-import javax.swing.*;
+/**********************************************************************************************
+ * This program creates a game called Surround, the objective of the game is to surround an
+ * opponent with tiles
+ *
+ * @author Austin Ackerman
+ * @author Evan Johns
+ * @version 02/07/2020 00:25:00
+ **********************************************************************************************/
 
 public class Cell {
+  /**
+   * player number for corresponding cell
+   */
+  private int playerNumber;
 
-    private int playerNumber;
-    /*
-     *  First, the Surround4 game class will only use the player
-     *   number to determine a winner.
-     *  Second, you are allowed to add new properties that you will
-     *   need for the later steps in your project.
-     *  	for example: add on a property color that changes with
-     *      show different risk levels.
-     *  		use red if the cell is about to surrounded, i.e., at high risk
-     *  		or use green if the cell is at low risk.
-     *
-     *  for example: add on a int property color that indicates
-     *  			1 means this would be a ok choose.
-     *  			3 means this would be a poor choose.
-     *  TEST
-     */
+  /*********************************************************************************************
+   * initialises all cell elements
+   * @param playerNumber
+   *********************************************************************************************/
+  public Cell(int playerNumber) {
+    super();
+    this.playerNumber = playerNumber;
+  }
 
-    public Cell(int playerNumber) {
-        super();
-        this.playerNumber = playerNumber;
-    }
+  public int getPlayerNumber() {
+    return playerNumber;
+  }
 
-    public int getPlayerNumber() {
-        return playerNumber;
-    }
+  public void setPlayerNumber(int playerNumber) {
+    this.playerNumber = playerNumber;
+  }
 }

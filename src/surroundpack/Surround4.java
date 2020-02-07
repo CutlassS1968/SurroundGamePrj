@@ -6,45 +6,43 @@ import javax.swing.*;
  * This program creates a game called Surround, the objective of the game is to surround an
  * opponent with tiles
  *
- * @author      Austin Ackerman
- * @author      Evan Johns
- * @version     02/11/2020
+ * @author Austin Ackerman
+ * @author Evan Johns
+ * @version 02/07/2020 00:25:00
  **********************************************************************************************/
 
 public class Surround4 {
-    /**
-     * Main starts the main loop of the game
-     * @param args
-     */
-    public static void main (String[] args)
-    {
-        /*  The JMenuBar is associated with the frame. The first step
-         *  is to create the menu items, and file menu.
-         */
-        JMenuBar menus;
-        JMenu fileMenu;
-        JMenuItem quitItem;
-        JMenuItem newGameItem;
 
-        // Why is this outside the Surround4Panel Constructor?
-        JFrame frame = new JFrame ("Surround game");
-        frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+  /*********************************************************************************************
+   * Main starts the main loop of the game
+   *
+   * @param args
+   *********************************************************************************************/
+  public static void main(String[] args) {
+    JMenuBar menus;
+    JMenu fileMenu;
+    JMenuItem quitItem;
+    JMenuItem newGameItem;
 
-        fileMenu = new JMenu("File");
-        quitItem = new JMenuItem("quit");
-        newGameItem = new JMenuItem("new game");
+    // QUESTION: CAN THIS BE PUT INTO THE Surround4Panel CONSTRUCTOR?
+    JFrame frame = new JFrame("Surround game");
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        fileMenu.add(quitItem);
-        fileMenu.add(newGameItem);
+    fileMenu = new JMenu("File");
+    quitItem = new JMenuItem("quit");
+    newGameItem = new JMenuItem("new game");
 
-        menus = new JMenuBar();
-        menus.add(fileMenu);
+    fileMenu.add(quitItem);
+    fileMenu.add(newGameItem);
 
-        frame.setJMenuBar(menus);
+    menus = new JMenuBar();
+    menus.add(fileMenu);
 
-        Surround4Panel panel = new Surround4Panel(quitItem, newGameItem);
-        frame.add(panel);
-        frame.setSize(600, 600);
-        frame.setVisible(true);
-    }
+    frame.setJMenuBar(menus);
+
+    Surround4Panel panel = new Surround4Panel(quitItem, newGameItem);
+    frame.add(panel);
+    frame.setSize(600, 600);
+    frame.setVisible(true);
+  }
 }

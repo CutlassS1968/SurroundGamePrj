@@ -177,8 +177,6 @@ Step 6: Add the following functionality to the game
 String strBdSize = JOptionPane.showInputDialog (null, "Enter in the size of the board: “);
 int bSize = Integer.parseInt(strBdSize);
 
--------------------------------------------------------------------------------------------------
-
 the board must be greater than 3 and less than 20.  (Recommendation: ask the user within the
 Surround4Panel class constructor).  If the user enters invalid input (e.g., “abc”, -10) then warn
 the user with a message Dialog box and use a default values.
@@ -191,6 +189,8 @@ Step 7: Add on to the newGameItem the following feature:
     •	If the user selects “New Game” from the JMenuItem, have the game re-ask these questions in
         step 7.  This will require you to reset GUI using revalidate and repaint.  Look online
         (google) and ask the question: adding and removing JButtons from a JPanel.
+
+---------------------------------------------------------------------------------------------------
 
 Step 8: Think outside of the box.  Listed below are some ideas you can try.  You must implement four
 ideas (1 - 6) of your choosing, OR  gold Star and two ideas  OR double Gold Star using recursion and
@@ -239,4 +239,24 @@ details if needed.
         surround winner.  In the example below: player 1 won.  There is lots of different versions
         of this special win condition. You must see the instructor to determine the exact win
         condition.
+
+---------------------------------------------------------------------------------------------------
+
+        This is documentation that was in Call.java, I moved it here in case someone needed it
+
+            /*
+             *  First, the Surround4 game class will only use the player
+             *   number to determine a winner.
+             *  Second, you are allowed to add new properties that you will
+             *   need for the later steps in your project.
+             *  	for example: add on a property color that changes with
+             *      show different risk levels.
+             *  		use red if the cell is about to surrounded, i.e., at high risk
+             *  		or use green if the cell is at low risk.
+             *
+             *  for example: add on a int property color that indicates
+             *  			1 means this would be a ok choose.
+             *  			3 means this would be a poor choose.
+             *
+             */
 
