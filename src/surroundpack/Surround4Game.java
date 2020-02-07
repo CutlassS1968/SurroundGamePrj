@@ -222,6 +222,14 @@ public class Surround4Game {
   public void setNumberPlayers(int nPlayers) {
     this.nPlayers = nPlayers;
   }
+
+  public int getbSize() {
+    return bSize;
+  }
+
+  public void setbSize(int bSize) {
+    this.bSize = bSize;
+  }
 }
 
 
