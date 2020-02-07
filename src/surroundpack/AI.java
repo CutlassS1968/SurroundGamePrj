@@ -70,6 +70,9 @@ public class AI{
               c.nextInt(game.getbSize());
             } while (board[r.nextInt(game.getbSize())][c.nextInt(game.getbSize())] != null);
             board[r.nextInt()][c.nextInt()] = new Cell(0);
+
+            // check for 0 in any of the surrounding cells, two and three is ok, one is taken care of by winning
+            //
           }
         }
       }

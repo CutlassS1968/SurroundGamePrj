@@ -184,6 +184,8 @@ public class Surround4Game {
     return -1;
   }
 
+  // Double Star recursive to yourself and then check surround and make sure not to recursive backwards
+
   public Cell getCell(int row, int col) {
     return board[row][col];
   }
