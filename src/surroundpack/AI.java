@@ -10,40 +10,34 @@ public class AI{
 
   private Surround4Game game;
 
-  public AI(int aPlayer) {
-    AI = aPlayer;
-  }
-
-  public Cell[][] startingMove() {
-    Random r = new Random();
-    int[] randomRowChoice = new int[game.getbSize()];
-    int[] randomColChoice = new int[game.getbSize()];
-    for (int row = 0; row < game.getbSize() - 1; row++) {
-      for (int col = 0; col < game.getbSize() - 1; col++) {
-        randomRowChoice[row] = row;
-        randomColChoice[col] = col;
-      }
-    }
-    int randChoice = r.nextInt(game.getbSize());
-    return new Cell[randomRowChoice[randChoice]][randomColChoice[randChoice]];
-  }
-
-  public Cell[][] calculatedMove() {
-    int[] calculatedRowChoice = new int[game.getbSize()];
-    int[] calculatedColChoice = new int[game.getbSize()];
-    for (int row = 0; row < game.getbSize() - 1; row++) {
-      for (int col = 0; col < game.getbSize() - 1; col++) {
-        calculatedRowChoice[row] = row;
-        calculatedColChoice[col] = col;
-      }
-    }
-    for (int row = 0; row < game.getbSize() - 1; row++) {
-      for (int col = 0; col < game.getbSize() - 1; col++) {
-        if (game.isWinner() == -1) {
-          return new Cell[calculatedRowChoice[row]][calculatedColChoice[col]];
+  // check if won
+  public void checkWon() {
+    for (int row = 0; row < game.getbSize(); row++) {
+      for (int col = 0; col < game.getbSize(); col++) {
+        if (board[row][col] == null) {
+          board[row][col] = new Cell(0);
+          if (!(game.isWinner() == 0)) {
+            board[row][col] = null;
+          }
         }
       }
     }
-    return null;
+  }
+
+  // check if block
+  public void checkBlock() {
+    for (int row = 0; row < game.getbSize(); row++) {
+      for (int col = 0; col < game.getbSize(); col++) {
+        if (board[row][col] == null) {
+          board[row][col] = new Cell(1);
+          if (!(game.isWinner() == 1)) {
+            board[row][col] = null;
+          }
+          else {
+            board[row][col] = new Cell(0);
+          }
+        }
+      }
+    }
   }
 }

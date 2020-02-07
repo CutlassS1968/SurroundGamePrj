@@ -37,6 +37,7 @@ public class Surround4Panel extends JPanel {
 
   /* declaration of the main game */
   private Surround4Game game;
+  private JMenuBar menus;
 
   /*********************************************************************************************
    * Instantiates Surround4Panel's instance variables
@@ -180,6 +181,47 @@ public class Surround4Panel extends JPanel {
         displayBoard();
       }
     }
+  }
+
+  public Surround4Panel() {
+
+  }
+
+  public void main() {
+    Surround4Panel main = new Surround4Panel();
+    main.setupGame();
+  }
+
+  /*********************************************************************************************
+   * This method sets up the game for the Surround4Panel
+   *
+   *********************************************************************************************/
+  public void setupGame() {
+    JMenuBar menus;
+    JMenu fileMenu;
+    JMenuItem quitItem;
+    JMenuItem newGameItem;
+
+    // QUESTION: CAN THIS BE PUT INTO THE Surround4Panel CONSTRUCTOR?
+    JFrame frame = new JFrame("Surround game");
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    fileMenu = new JMenu("File");
+    quitItem = new JMenuItem("quit");
+    newGameItem = new JMenuItem("new game");
+
+    fileMenu.add(quitItem);
+    fileMenu.add(newGameItem);
+
+    menus = new JMenuBar();
+    menus.add(fileMenu);
+
+    frame.setJMenuBar(menus);
+
+    Surround4Panel panel = new Surround4Panel(quitItem, newGameItem);
+    frame.add(panel);
+    frame.setSize(600, 600);
+    frame.setVisible(true);
   }
 }
 
