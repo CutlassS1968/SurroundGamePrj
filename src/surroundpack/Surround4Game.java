@@ -22,14 +22,6 @@ public class Surround4Game {
   /* user input number of players */
   private int nPlayers;
 
-//    QUESTION: DO WE STILL NEED THE DEFAULT CONSTRUCTOR?
-
-//    public Surround4Game() {
-//        super();
-//        board = new Cell[10][10];
-//        this.player = 0;
-//    }
-
   /*********************************************************************************************
    * Instantiates Surround4Game's instance variables
    *
@@ -43,17 +35,6 @@ public class Surround4Game {
     this.bSize = bSize;
     this.nPlayers = nPlayers;
   }
-
-// QUESTION: SHOULD WE BE USING RESET FOR NEW GAME? AND HOW?
-//
-//  /** resets the current game in preparation for a new game */
-//  public void reset() {
-//    for (int r = 0; r < 10; r++) {
-//      for (int c = 0; c < 10; c++) {
-//        board[r][c] = null;
-//      }
-//    }
-//  }
 
   public void nextPlayer() {
     if (cPlayer >= nPlayers - 1) {

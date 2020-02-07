@@ -187,7 +187,7 @@ public class Surround4Panel extends JPanel {
 
   }
 
-  public void main() {
+  public static void main(String[] args) {
     Surround4Panel main = new Surround4Panel();
     main.setupGame();
   }
@@ -202,7 +202,6 @@ public class Surround4Panel extends JPanel {
     JMenuItem quitItem;
     JMenuItem newGameItem;
 
-    // QUESTION: CAN THIS BE PUT INTO THE Surround4Panel CONSTRUCTOR?
     JFrame frame = new JFrame("Surround game");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

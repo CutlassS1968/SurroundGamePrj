@@ -10,6 +10,9 @@ public class AI{
 
   private Surround4Game game;
 
+  private Random r = new Random();
+  private Random c = new Random();
+
   // check if won
   public void checkWon() {
     for (int row = 0; row < game.getbSize(); row++) {
@@ -35,6 +38,38 @@ public class AI{
           }
           else {
             board[row][col] = new Cell(0);
+          }
+        }
+      }
+    }
+  }
+
+  // fill in move (will put next to solo number, if not chooses random Cell)
+  public void checkSolo() {
+    for (int row = 0; row < game.getbSize(); row++) {
+      for (int col = 0; col <game.getbSize(); col++) {
+        if (board[row][col] != null && board[row][col].getPlayerNumber() != 0) {
+          if (board[row - 1][col] == null && board[row + 1][col] == null && board[row][col - 1] == null &&
+              board[row][col + 1] == null) {
+            switch(r.nextInt(4)) {
+              case 1:
+                board[row - 1][col] = new Cell(0);
+
+              case 2:
+                board[row + 1][col] = new Cell(0);
+
+              case 3:
+                board[row][col - 1] = new Cell(0);
+
+              case 4:
+                board[row][col + 1] = new Cell(0);
+            }
+          } else {
+            do {
+              r.nextInt(game.getbSize());
+              c.nextInt(game.getbSize());
+            } while (board[r.nextInt(game.getbSize())][c.nextInt(game.getbSize())] != null);
+            board[r.nextInt()][c.nextInt()] = new Cell(0);
           }
         }
       }
