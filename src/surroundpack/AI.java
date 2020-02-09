@@ -2,7 +2,7 @@ package surroundpack;
 
 import java.util.Random;
 
-public class AI{
+public class AI {
 
   private int AI;
 
@@ -35,8 +35,7 @@ public class AI{
           board[row][col] = new Cell(1);
           if (!(game.isWinner() == 1)) {
             board[row][col] = null;
-          }
-          else {
+          } else {
             board[row][col] = new Cell(0);
           }
         }
@@ -47,11 +46,11 @@ public class AI{
   // fill in move (will put next to solo number, if not chooses random Cell)
   public void checkSolo() {
     for (int row = 0; row < game.getbSize(); row++) {
-      for (int col = 0; col <game.getbSize(); col++) {
+      for (int col = 0; col < game.getbSize(); col++) {
         if (board[row][col] != null && board[row][col].getPlayerNumber() != 0) {
           if (board[row - 1][col] == null && board[row + 1][col] == null && board[row][col - 1] == null &&
               board[row][col + 1] == null) {
-            switch(r.nextInt(4)) {
+            switch (r.nextInt(4)) {
               case 1:
                 board[row - 1][col] = new Cell(0);
 

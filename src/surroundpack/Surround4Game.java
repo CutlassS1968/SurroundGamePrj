@@ -22,6 +22,9 @@ public class Surround4Game {
   /* user input number of players */
   private int nPlayers;
 
+  /* user input AI activation */
+  private int activateAI;
+
   /*********************************************************************************************
    * Instantiates Surround4Game's instance variables
    *
@@ -29,17 +32,22 @@ public class Surround4Game {
    * @param nPlayers int - Number of players
    * @param sPlayer int - Starting player
    *********************************************************************************************/
-  public Surround4Game(int bSize, int nPlayers, int sPlayer) {
+  public Surround4Game(int bSize, int nPlayers, int sPlayer, int activateAI) {
     board = new Cell[bSize][bSize];
     this.cPlayer = sPlayer;
     this.bSize = bSize;
     this.nPlayers = nPlayers;
+    this.activateAI = activateAI;
   }
 
   public void nextPlayer() {
-    if (cPlayer >= nPlayers - 1) {
+    if (cPlayer >= nPlayers - 1 && activateAI == 0) {
       cPlayer = 0;
-    } else {
+    }
+    else if (activateAI == 1){
+      cPlayer = 1;
+    }
+    else {
       cPlayer = cPlayer + 1;
     }
   }
@@ -212,6 +220,14 @@ public class Surround4Game {
 
   public void setbSize(int bSize) {
     this.bSize = bSize;
+  }
+
+  public int getActivateAI() {
+    return activateAI;
+  }
+
+  public void setActivateAI(int activateAI) {
+    this.activateAI = activateAI;
   }
 }
 

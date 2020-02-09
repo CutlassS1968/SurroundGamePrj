@@ -29,6 +29,9 @@ public class Surround4Panel extends JPanel {
   /* user input starting player */
   private int sPlayer;
 
+  /* user input AI activation */
+  private int activateAI;
+
   /* elements used in creating user interface */
   private JPanel panel;
   private ButtonListener listen;
@@ -56,7 +59,7 @@ public class Surround4Panel extends JPanel {
     getValidNumbers();
     createBoard();
     add(panel, BorderLayout.CENTER);
-    game = new Surround4Game(bSize, nPlayers, sPlayer);
+    game = new Surround4Game(bSize, nPlayers, sPlayer, activateAI);
     quitItem.addActionListener(listen);
     newGameItem.addActionListener(listen);
 
@@ -127,6 +130,19 @@ public class Surround4Panel extends JPanel {
       sPlayer = 0;
       JOptionPane.showMessageDialog(null, "Invalid entry");
     }
+
+    // Activate AI
+    String strActivateAI = JOptionPane.showInputDialog(null, "Would you like to play against" +
+        " the AI? (0 = no, 1 = yes)");
+    try {
+      activateAI = Integer.parseInt(strActivateAI);
+      if (activateAI < 0 || activateAI > 1) {
+        throw new IllegalArgumentException();
+      }
+    } catch (Exception e) {
+      activateAI = 0;
+      JOptionPane.showMessageDialog(null, "Invalid entry: AI deactivated");
+    }
   }
 
   /*********************************************************************************************
@@ -153,7 +169,7 @@ public class Surround4Panel extends JPanel {
         getValidNumbers();
         createBoard();
         add(panel, BorderLayout.CENTER);
-        game = new Surround4Game(bSize, nPlayers, sPlayer);
+        game = new Surround4Game(bSize, nPlayers, sPlayer, activateAI);
         panel.revalidate();
         panel.repaint();
       }
@@ -172,12 +188,15 @@ public class Surround4Panel extends JPanel {
         }
       }
 
+      // Makes the move for AI
+
+
       displayBoard();
 
       // Checks for winner
       if (game.isWinner() != -1) {
         JOptionPane.showMessageDialog(null, "Player " + game.isWinner() + " Wins!");
-        game = new Surround4Game(bSize, nPlayers, sPlayer);
+        game = new Surround4Game(bSize, nPlayers, sPlayer, activateAI);
         displayBoard();
       }
     }
