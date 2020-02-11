@@ -104,7 +104,7 @@ public class Surround4Panel extends JPanel {
       }
     } catch (Exception e) {
       bSize = 10;
-      JOptionPane.showMessageDialog(null, "Invalid entry");
+      JOptionPane.showMessageDialog(null, "Invalid entry: Default = 10");
     }
 
     // Number of Players
@@ -116,7 +116,7 @@ public class Surround4Panel extends JPanel {
       }
     } catch (Exception e) {
       nPlayers = 2;
-      JOptionPane.showMessageDialog(null, "Invalid entry");
+      JOptionPane.showMessageDialog(null, "Invalid entry: Default = 2");
     }
 
     // Starting Player
@@ -189,7 +189,18 @@ public class Surround4Panel extends JPanel {
       }
 
       // Makes the move for AI
-
+      for (int row = 0; row < board.length; row++) {
+        for (int col = 0; col < board.length; col++) {
+          if (board[row][col] == e.getSource()) {
+            if (activateAI == 1) {
+              AI ai = new AI(bSize, nPlayers, sPlayer, activateAI);
+              ai.checkWon();
+              ai.checkBlock();
+              ai.checkSolo();
+            }
+          }
+        }
+      }
 
       displayBoard();
 
@@ -200,6 +211,38 @@ public class Surround4Panel extends JPanel {
         displayBoard();
       }
     }
+  }
+
+  public int getbSize() {
+    return bSize;
+  }
+
+  public void setbSize(int bSize) {
+    this.bSize = bSize;
+  }
+
+  public int getnPlayers() {
+    return nPlayers;
+  }
+
+  public void setnPlayers(int nPlayers) {
+    this.nPlayers = nPlayers;
+  }
+
+  public int getsPlayer() {
+    return sPlayer;
+  }
+
+  public void setsPlayer(int sPlayer) {
+    this.sPlayer = sPlayer;
+  }
+
+  public int getActivateAI() {
+    return activateAI;
+  }
+
+  public void setActivateAI(int activateAI) {
+    this.activateAI = activateAI;
   }
 
   public Surround4Panel() {
