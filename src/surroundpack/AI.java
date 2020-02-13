@@ -6,20 +6,6 @@ public class AI extends Surround4Game{
 
   private int AI;
 
-  /* current player */
-  private int sPlayer = 0;
-
-  /* user input size for board */
-  private int bSize = 0;
-
-  /* user input number of players */
-  private int nPlayer = 0;
-
-  /* user input AI activation */
-  private int activateAI = 0;
-
-  private Cell[][] board;
-
   private Surround4Panel panel;
 
   private Surround4Game game;
@@ -37,10 +23,6 @@ public class AI extends Surround4Game{
   public AI(int bSize, int nPlayers, int sPlayer, int activateAI) {
     super(bSize, nPlayers, sPlayer, activateAI);
   }
-
-//  public AI() {
-//    super(bSize, nPlayer, sPlayer, activateAI);
-//  }
 
   // check if won
   public void checkWon() {

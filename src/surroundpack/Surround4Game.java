@@ -11,19 +11,19 @@ package surroundpack;
 public class Surround4Game {
 
   /* structure for game board */
-  private Cell[][] board;
+  protected Cell[][] board;
 
   /* current player */
-  private int cPlayer;
+  protected int cPlayer;
 
   /* user input size for board */
-  private int bSize;
+  protected int bSize;
 
   /* user input number of players */
-  private int nPlayers;
+  protected int nPlayers;
 
   /* user input AI activation */
-  private int activateAI;
+  protected int activateAI;
 
   /*********************************************************************************************
    * Instantiates Surround4Game's instance variables
@@ -196,6 +196,10 @@ public class Surround4Game {
 
   public Cell getCell(int row, int col) {
     return board[row][col];
+  }
+
+  public Cell setCell(int row, int col, Cell cell) {
+    return board[row][col] = cell;
   }
 
   public int getCurrentPlayer() {
