@@ -52,6 +52,20 @@ public class Surround4Game {
     }
   }
 
+  // Makes the move for AI
+  public void checkAITurn() {
+    for (int row = 0; row < board.length; row++) {
+      for (int col = 0; col < board.length; col++) {
+            if (activateAI == 1) {
+              AI ai = new AI(bSize, nPlayers, cPlayer, activateAI);
+              ai.checkWon();
+              ai.checkBlock();
+              ai.checkSolo();
+          }
+      }
+    }
+  }
+
   /**
    * select returns a boolean value depending on whether or not cell is occupied
    *
