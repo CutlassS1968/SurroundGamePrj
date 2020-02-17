@@ -51,7 +51,7 @@ public class Surround4Game {
   }
 
   // Makes the move for AI
-  public void checkAITurn() {
+  public void makeAIMove() {
     if (activateAI == 1) {
       AI ai = new AI(bSize, nPlayers, cPlayer, activateAI);
       ai.checkWon();

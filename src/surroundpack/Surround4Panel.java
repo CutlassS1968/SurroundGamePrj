@@ -188,6 +188,15 @@ public class Surround4Panel extends JPanel {
         }
       }
 
+      for (int row = 0; row < board.length; row++) {
+        for (int col = 0; col < board.length; col++) {
+          if (board[row][col] == e.getSource()) {
+            game.makeAIMove();
+            board[row][col].setText("" + game.getCurrentPlayer());
+          }
+        }
+      }
+
       // i can get the value into the cells but the not show them with setText
       // somehow through panel but game and ai should work
       // finish up solo method in AI
