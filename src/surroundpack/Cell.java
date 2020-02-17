@@ -20,7 +20,6 @@ public class Cell {
    * @param playerNumber
    *********************************************************************************************/
   public Cell(int playerNumber) {
-    super();
     this.playerNumber = playerNumber;
   }
 
