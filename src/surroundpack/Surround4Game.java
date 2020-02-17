@@ -41,17 +41,15 @@ public class Surround4Game {
   }
 
   public void nextPlayer() {
-    if (cPlayer >= nPlayers - 1 && activateAI == 0) {
+    if (cPlayer >= nPlayers - 1) {
       cPlayer = 0;
-    } else if (activateAI == 1) {
-      cPlayer = 1;
     } else {
       cPlayer = cPlayer + 1;
     }
   }
 
   // Makes the move for AI
-  public void makeAIMove() {
+  public void nextAIMove() {
     if (activateAI == 1) {
       AI ai = new AI(bSize, nPlayers, cPlayer, activateAI);
       ai.checkWon();
