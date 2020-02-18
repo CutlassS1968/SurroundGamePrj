@@ -6,22 +6,23 @@ package surroundpack;
  *
  * @author Austin Ackerman
  * @author Evan Johns
- * @version 02/07/2020 00:25:00
+ * @version 02/18/2020 11:19
  **********************************************************************************************/
 
 public class Cell {
-  /**
-   * player number for corresponding cell
-   */
+  /* player number for corresponding cell */
   private int playerNumber;
 
+  /*********************************************************************************************
+   * Default constructor for empty cells
+   *********************************************************************************************/
   public Cell() {
     playerNumber = -1;
   }
 
   /*********************************************************************************************
-   * initialises all cell elements
-   * @param playerNumber
+   * Constructor for cells with player number imported
+   * @param playerNumber is the cell's player number
    *********************************************************************************************/
   public Cell(int playerNumber) {
     this.playerNumber = playerNumber;

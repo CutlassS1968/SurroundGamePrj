@@ -5,14 +5,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 /**********************************************************************************************
  * This program creates a game called Surround, the objective of the game is to surround an
- * opponent with tiles
+ * opponent with tiles. It features an optional AI opponent and border wrapping so you can
+ * surround your opponent by placing tiles on opposite sides of the board
  *
  * @author Austin Ackerman
  * @author Evan Johns
- * @version 02/18/2020 00:25:00
+ * @version 02/18/2020 11:19
  **********************************************************************************************/
 
 public class Surround4Panel extends JPanel {
@@ -29,16 +31,14 @@ public class Surround4Panel extends JPanel {
   /* user input starting player */
   private int sPlayer;
 
-  /* user input AI activation */
-  private int activateAI;
+  /* user input Ai activation */
+  private int activateAi;
 
   /* elements used in creating user interface */
   private JPanel panel;
   private ButtonListener listen;
   private JMenuItem quitItem;
   private JMenuItem newGameItem;
-  private JLabel [] winsLabel;
-  private int [] wins;
 
   /* declaration of the main game */
   private Surround4Game game;
@@ -56,46 +56,34 @@ public class Surround4Panel extends JPanel {
 
     setLayout(new BorderLayout());
     panel = new JPanel();
-
-    wins = new int[nPlayers];
-    winsLabel = new JLabel[nPlayers];
+    //panel.setBackground(Color.DARK_GRAY);
 
     getValidNumbers();
     createBoard();
-    setupWinCounter();
     add(panel, BorderLayout.CENTER);
-    game = new Surround4Game(bSize, nPlayers, sPlayer, activateAI);
+    game = new Surround4Game(bSize, nPlayers, sPlayer);
     quitItem.addActionListener(listen);
     newGameItem.addActionListener(listen);
 
   }
 
-  private void setupWinCounter() {
-    for (int i = 0; i < winsLabel.length; ++i) {
-      wins[i] = 0;
-      winsLabel[i] = new JLabel();
-      winsLabel[i].setText("Player " + Integer.toString(i) + " wins: 0");
-      panel.add(winsLabel[i]);
-    }
-  }
-
-  private void addWinner(int player) {
-    ++wins[player];
-    winsLabel[player].setText("Player " + player + "wins: " + wins[player]);
-  }
-
   private void createBoard() {
     board = new JButton[bSize][bSize];
-    panel.setLayout(new GridLayout(1 + bSize, bSize));
+    panel.setLayout(new GridLayout(bSize, bSize));
 
     for (int i = 0; i < bSize; i++) {
       for (int j = 0; j < bSize; j++) {
         board[i][j] = new JButton("");
         board[i][j].addActionListener(listen);
+
+        // Formatting Button
+        board[i][j].setForeground(Color.DARK_GRAY);
+        board[i][j].setBorder(new LineBorder(Color.LIGHT_GRAY));
+        board[i][j].setFont(new java.awt.Font("Arial", Font.BOLD, 14));
+
         panel.add(board[i][j]);
       }
     }
-
   }
 
   private void displayBoard() {
@@ -151,20 +139,20 @@ public class Surround4Panel extends JPanel {
       JOptionPane.showMessageDialog(null, "Invalid entry");
     }
 
-    // Activate AI
-    String strActivateAI = JOptionPane.showInputDialog(null, "Would you like to play against" +
-        " the AI? (0 = no, 1 = yes)");
+    // Activate Ai
+    String strActivateAi = JOptionPane.showInputDialog(null, "Would you like to play against" +
+        " the Ai? (0 = no, 1 = yes)");
     try {
-      activateAI = Integer.parseInt(strActivateAI);
-      if (activateAI < 0 || activateAI > 1) {
+      activateAi = Integer.parseInt(strActivateAi);
+      if (activateAi < 0 || activateAi > 1) {
         throw new IllegalArgumentException();
       }
-      JOptionPane.showMessageDialog(null, "You chose to activate AI, starting player will default" +
+      JOptionPane.showMessageDialog(null, "You chose to activate Ai, starting player will default" +
           " to 1");
       sPlayer = 1;
     } catch (Exception e) {
-      activateAI = 0;
-      JOptionPane.showMessageDialog(null, "Invalid entry: AI deactivated");
+      activateAi = 0;
+      JOptionPane.showMessageDialog(null, "Invalid entry: Ai deactivated");
     }
   }
 
@@ -192,7 +180,7 @@ public class Surround4Panel extends JPanel {
         getValidNumbers();
         createBoard();
         add(panel, BorderLayout.CENTER);
-        game = new Surround4Game(bSize, nPlayers, sPlayer, activateAI);
+        game = new Surround4Game(bSize, nPlayers, sPlayer);
         panel.revalidate();
         panel.repaint();
       }
@@ -202,7 +190,7 @@ public class Surround4Panel extends JPanel {
         for (int col = 0; col < board[0].length; col++) {
           if (board[row][col] == e.getSource()) {
             if (game.select(row, col)) {
-              game.board[row][col].setPlayerNumber(game.getCurrentPlayer());
+              game.setBoardCell(row, col);
               board[row][col].setText("" + game.getCurrentPlayer());
               game.nextPlayer();
             } else {
@@ -214,8 +202,9 @@ public class Surround4Panel extends JPanel {
 
       displayBoard();
 
-      if (game.getCurrentPlayer() == 0 && activateAI == 1) {
-        game.nextAIMove();
+      // Checks to see if it's the Ai's turn
+      if (game.getCurrentPlayer() == 0 && activateAi == 1) {
+        game.nextAiMove();
         game.nextPlayer();
         displayBoard();
       }
@@ -223,58 +212,16 @@ public class Surround4Panel extends JPanel {
       // Checks for winner
       if (game.isWinner() != -1) {
         JOptionPane.showMessageDialog(null, "Player " + game.isWinner() + " Wins!");
-        game = new Surround4Game(bSize, nPlayers, sPlayer, activateAI);
+        game = new Surround4Game(bSize, nPlayers, sPlayer);
         displayBoard();
       }
     }
   }
 
-  public int getbSize() {
-    return bSize;
-  }
-
-  public void setbSize(int bSize) {
-    this.bSize = bSize;
-  }
-
-  public int getnPlayers() {
-    return nPlayers;
-  }
-
-  public void setnPlayers(int nPlayers) {
-    this.nPlayers = nPlayers;
-  }
-
-  public int getsPlayer() {
-    return sPlayer;
-  }
-
-  public void setsPlayer(int sPlayer) {
-    this.sPlayer = sPlayer;
-  }
-
-  public int getActivateAI() {
-    return activateAI;
-  }
-
-  public void setActivateAI(int activateAI) {
-    this.activateAI = activateAI;
-  }
-
-  public Surround4Panel() {
-
-  }
-
-  public static void main(String[] args) {
-    Surround4Panel main = new Surround4Panel();
-    main.setupGame();
-  }
-
   /*********************************************************************************************
-   * This method sets up the game for the Surround4Panel
-   *
+   * Main method which starts the Surround 4 Game
    *********************************************************************************************/
-  public void setupGame() {
+  public static void main(String[] args) {
     JMenuBar menus;
     JMenu fileMenu;
     JMenuItem quitItem;
