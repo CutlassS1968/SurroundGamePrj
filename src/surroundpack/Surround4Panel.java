@@ -12,7 +12,7 @@ import javax.swing.*;
  *
  * @author Austin Ackerman
  * @author Evan Johns
- * @version 02/07/2020 00:25:00
+ * @version 02/18/2020 00:25:00
  **********************************************************************************************/
 
 public class Surround4Panel extends JPanel {
@@ -37,10 +37,11 @@ public class Surround4Panel extends JPanel {
   private ButtonListener listen;
   private JMenuItem quitItem;
   private JMenuItem newGameItem;
+  private JLabel [] winsLabel;
+  private int [] wins;
 
   /* declaration of the main game */
   private Surround4Game game;
-  private JMenuBar menus;
 
   /*********************************************************************************************
    * Instantiates Surround4Panel's instance variables
@@ -56,8 +57,12 @@ public class Surround4Panel extends JPanel {
     setLayout(new BorderLayout());
     panel = new JPanel();
 
+    wins = new int[nPlayers];
+    winsLabel = new JLabel[nPlayers];
+
     getValidNumbers();
     createBoard();
+    setupWinCounter();
     add(panel, BorderLayout.CENTER);
     game = new Surround4Game(bSize, nPlayers, sPlayer, activateAI);
     quitItem.addActionListener(listen);
@@ -65,9 +70,23 @@ public class Surround4Panel extends JPanel {
 
   }
 
+  private void setupWinCounter() {
+    for (int i = 0; i < winsLabel.length; ++i) {
+      wins[i] = 0;
+      winsLabel[i] = new JLabel();
+      winsLabel[i].setText("Player " + Integer.toString(i) + " wins: 0");
+      panel.add(winsLabel[i]);
+    }
+  }
+
+  private void addWinner(int player) {
+    ++wins[player];
+    winsLabel[player].setText("Player " + player + "wins: " + wins[player]);
+  }
+
   private void createBoard() {
     board = new JButton[bSize][bSize];
-    panel.setLayout(new GridLayout(bSize, bSize));
+    panel.setLayout(new GridLayout(1 + bSize, bSize));
 
     for (int i = 0; i < bSize; i++) {
       for (int j = 0; j < bSize; j++) {
@@ -76,12 +95,13 @@ public class Surround4Panel extends JPanel {
         panel.add(board[i][j]);
       }
     }
+
   }
 
   private void displayBoard() {
     for (int row = 0; row < bSize; row++) {
       for (int col = 0; col < bSize; col++) {
-        if (game.getCell(row, col) != null) {
+        if (game.getCell(row, col).getPlayerNumber() != -1) {
           board[row][col].setText("" + game.getCell(row, col).getPlayerNumber());
         } else {
           board[row][col].setText("");
@@ -139,6 +159,9 @@ public class Surround4Panel extends JPanel {
       if (activateAI < 0 || activateAI > 1) {
         throw new IllegalArgumentException();
       }
+      JOptionPane.showMessageDialog(null, "You chose to activate AI, starting player will default" +
+          " to 1");
+      sPlayer = 1;
     } catch (Exception e) {
       activateAI = 0;
       JOptionPane.showMessageDialog(null, "Invalid entry: AI deactivated");
@@ -179,6 +202,7 @@ public class Surround4Panel extends JPanel {
         for (int col = 0; col < board[0].length; col++) {
           if (board[row][col] == e.getSource()) {
             if (game.select(row, col)) {
+              game.board[row][col].setPlayerNumber(game.getCurrentPlayer());
               board[row][col].setText("" + game.getCurrentPlayer());
               game.nextPlayer();
             } else {
@@ -188,22 +212,11 @@ public class Surround4Panel extends JPanel {
         }
       }
 
-      // i can get the value into the cells but the not show them with setText
-      // somehow through panel but game and ai should work
-      // finish up solo method in AI
-
       displayBoard();
 
       if (game.getCurrentPlayer() == 0 && activateAI == 1) {
         game.nextAIMove();
-        for (int row = 0; row < board.length; row++) {
-          for (int col = 0; col < board.length; col++) {
-            if (game.select(row, col)) {
-              board[row][col].setText("" + game.getCurrentPlayer());
-              game.nextPlayer();
-            }
-          }
-        }
+        game.nextPlayer();
         displayBoard();
       }
 
@@ -274,6 +287,8 @@ public class Surround4Panel extends JPanel {
     quitItem = new JMenuItem("quit");
     newGameItem = new JMenuItem("new game");
 
+    Surround4Panel panel = new Surround4Panel(quitItem, newGameItem);
+
     fileMenu.add(quitItem);
     fileMenu.add(newGameItem);
 
@@ -282,7 +297,6 @@ public class Surround4Panel extends JPanel {
 
     frame.setJMenuBar(menus);
 
-    Surround4Panel panel = new Surround4Panel(quitItem, newGameItem);
     frame.add(panel);
     frame.setSize(600, 600);
     frame.setVisible(true);

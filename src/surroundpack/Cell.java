@@ -15,6 +15,10 @@ public class Cell {
    */
   private int playerNumber;
 
+  public Cell() {
+    playerNumber = -1;
+  }
+
   /*********************************************************************************************
    * initialises all cell elements
    * @param playerNumber
